@@ -63,7 +63,7 @@ class Fetcher(Node):
                         jpg_data = bytes_data[a:b+2]
                         bytes_data = bytes_data[b+2:]
                         # Call the placeholder function for image handling
-                        self.todo_cv_image_processing(jpg_data)
+                        self.process_cv(jpg_data)
                     else:
                         break
                 
@@ -77,7 +77,7 @@ class Fetcher(Node):
             self.streaming = False
             response.close()
 
-    def todo_cv_image_processing(self, image_data):
+    def process_cv(self, image_data):
         """
         TODO: Implement the CV part to decode JPEG and publish to ROS.
         This function is called every time a full JPEG is scanned from the stream.
