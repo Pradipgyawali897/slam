@@ -1,18 +1,20 @@
 # Sugam 
 
-
 ## CV Tasks (Assigned to Sugam)
-- [ ] **[CV]** Implement `process_cv` in `fetcher.py`
-    - **Path**: `src/esp32_cam_slam/esp32_cam_slam/fetcher.py`
-    - **Goal**: Decode the raw JPEG bytes into an OpenCV image.
-    - **Parameter**: `image_data` (The raw bytes received from the ESP32-CAM stream).
-    - **Command**: `cv_image = cv2.imdecode(np.frombuffer(image_data, np.uint8), cv2.IMREAD_COLOR)`
-    - **Return**: Assign the result to `cv_image` to be used for future processing (e.g., ORB, display).
+- [ ] **[CV]** Implement `process_cv` in `processor.py`
+    - **Path**: `src/esp32_cam_slam/esp32_cam_slam/processor.py`
+    - **Goal**: Implement SLAM core (Feature extraction, tracking, VO estimation).
+    - **Note**: The `fetcher` node now handles the HTTP stream and image publishing. Your node subscribes to `/camera/image_raw`.
+    - **Input**: The `process_cv` function receives an OpenCV `cv_image`.
 
-## ROS & SLAM Tasks
-- [ ] **[ROS]** Publish decoded images to a ROS 2 `Image` topic
-- [ ] **[ROS]** Implement Camera Info publisher with calibration parameters
-- [ ] **[SLAM]** Feature extraction using ORB or FAST
-- [ ] **[SLAM]** Feature matching and tracking between frames
-- [ ] **[SLAM]** Implement Visual Odometry (VO) pipeline
-- [ ] **[SLAM]** Loop closure detection and global map optimization
+## System Tasks (General)
+- [x] Refactor SLAM into Modular Architecture (Fetcher, Processor, Mapper)
+- [ ] **[ROS]** Connect `processor` output to `mapper` input
+- [ ] **[ROS]** Add `launch` file to start all nodes (Fetcher, Processor, Mapper)
+- [ ] **[Rviz]** Setup Rviz2 visualization for Features and Map
+
+## SLAM Pipeline
+- [ ] Feature extraction using ORB or FAST
+- [ ] Feature matching and tracking between frames
+- [ ] Implement Visual Odometry (VO) pipeline
+- [ ] Loop closure detection and global map optimization

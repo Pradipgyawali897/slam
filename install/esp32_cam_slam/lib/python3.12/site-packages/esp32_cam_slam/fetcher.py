@@ -1,12 +1,13 @@
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Image, CameraInfo
+from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
 import requests
 import urllib3
-import time
+
+# Disable insecure request warnings for self-signed certs
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Fetcher(Node):
@@ -17,7 +18,11 @@ class Fetcher(Node):
         self.declare_parameter('url', 'https://192.168.1.5:8080/video')
         self.url = self.get_parameter('url').get_parameter_value().string_value
         
-        self.get_logger().info(f"Fetcher node initialized. Target URL: {self.url}")
+        # Publishers
+        self.image_pub = self.create_publisher(Image, '/camera/image_raw', 10)
+        self.bridge = CvBridge()
+        
+        self.get_logger().info(f"Fetcher node initialized. Publishing to /camera/image_raw. Source: {self.url}")
         
         # Connection state
         self.streaming = False
@@ -29,18 +34,10 @@ class Fetcher(Node):
         
         try:
             self.get_logger().info(f"Connecting to {self.url}...")
-            # verify=False for self-signed certs
             response = requests.get(self.url, stream=True, timeout=5, verify=False)
             
             if response.status_code == 200:
-                content_type = response.headers.get('Content-Type', '')
-                self.get_logger().info(f"Connected! Content-Type: {content_type}")
-                
-                if 'text/html' in content_type:
-                    self.get_logger().error("URL returned HTML. Please check the stream path.")
-                    response.close()
-                    return
-
+                self.get_logger().info("Connected to stream!")
                 self.streaming = True
                 self.process_stream(response)
             else:
@@ -54,7 +51,6 @@ class Fetcher(Node):
         try:
             for chunk in response.iter_content(chunk_size=4096):
                 bytes_data += chunk
-                
                 while True:
                     a = bytes_data.find(b'\xff\xd8') # JPEG Start
                     b = bytes_data.find(b'\xff\xd9') # JPEG End marker
@@ -62,8 +58,7 @@ class Fetcher(Node):
                     if a != -1 and b != -1 and a < b:
                         jpg_data = bytes_data[a:b+2]
                         bytes_data = bytes_data[b+2:]
-                        # Call the placeholder function for image handling
-                        self.todo_cv_image_processing(jpg_data)
+                        self.publish_image(jpg_data)
                     else:
                         break
                 
@@ -77,13 +72,25 @@ class Fetcher(Node):
             self.streaming = False
             response.close()
 
-    def todo_cv_image_processing(self, image_data):
-        """
-        TODO: Implement the CV part to decode JPEG and publish to ROS.
-        This function is called every time a full JPEG is scanned from the stream.
-        """
-        self.get_logger().info(f"CAPTURED IMAGE DATA: {len(image_data)} bytes. TODO: Process with CV.")
-        pass
+    def publish_image(self, jpg_data):
+        """Decodes JPEG and publishes to ROS topic"""
+        try:
+            # Decode JPEG
+            np_arr = np.frombuffer(jpg_data, np.uint8)
+            cv_image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            
+            if cv_image is not None:
+                # Convert to ROS Image message
+                img_msg = self.bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")
+                img_msg.header.stamp = self.get_clock().now().to_msg()
+                img_msg.header.frame_id = "camera_link"
+                
+                # Publish
+                self.image_pub.publish(img_msg)
+            else:
+                self.get_logger().warning("Failed to decode image frame")
+        except Exception as e:
+            self.get_logger().error(f"Error publishing image: {str(e)}")
 
 def main(args=None):
     rclpy.init(args=args)

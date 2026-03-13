@@ -10,6 +10,9 @@ setup.py
 ../../build/esp32_cam_slam/esp32_cam_slam.egg-info/zip-safe
 esp32_cam_slam/__init__.py
 esp32_cam_slam/fetcher.py
+esp32_cam_slam/mapper.py
+esp32_cam_slam/processor.py
+launch/slam.launch.py
 resource/esp32_cam_slam
 test/test_copyright.py
 test/test_flake8.py

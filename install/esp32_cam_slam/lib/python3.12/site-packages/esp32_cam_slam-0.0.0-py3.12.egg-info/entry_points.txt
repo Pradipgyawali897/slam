@@ -1,2 +1,4 @@
 [console_scripts]
 fetcher = esp32_cam_slam.fetcher:main
+mapper = esp32_cam_slam.mapper:main
+processor = esp32_cam_slam.processor:main
