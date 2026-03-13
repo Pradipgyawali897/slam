@@ -1,0 +1,24 @@
+[0.552s] Invoking command in '/home/xenox/Desktop/slam/src/esp32_cam_slam': PYTHONPATH=/home/xenox/Desktop/slam/build/esp32_cam_slam/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/xenox/Desktop/slam/install/esp32_cam_slam/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/esp32_cam_slam build --build-base /home/xenox/Desktop/slam/build/esp32_cam_slam/build install --record /home/xenox/Desktop/slam/build/esp32_cam_slam/install.log --single-version-externally-managed install_data
+[0.739s] running egg_info
+[0.750s] writing ../../build/esp32_cam_slam/esp32_cam_slam.egg-info/PKG-INFO
+[0.750s] writing dependency_links to ../../build/esp32_cam_slam/esp32_cam_slam.egg-info/dependency_links.txt
+[0.751s] writing entry points to ../../build/esp32_cam_slam/esp32_cam_slam.egg-info/entry_points.txt
+[0.751s] writing requirements to ../../build/esp32_cam_slam/esp32_cam_slam.egg-info/requires.txt
+[0.751s] writing top-level names to ../../build/esp32_cam_slam/esp32_cam_slam.egg-info/top_level.txt
+[0.778s] reading manifest file '../../build/esp32_cam_slam/esp32_cam_slam.egg-info/SOURCES.txt'
+[0.778s] writing manifest file '../../build/esp32_cam_slam/esp32_cam_slam.egg-info/SOURCES.txt'
+[0.778s] running build
+[0.778s] running build_py
+[0.778s] copying esp32_cam_slam/fetcher.py -> /home/xenox/Desktop/slam/build/esp32_cam_slam/build/lib/esp32_cam_slam
+[0.778s] running install
+[0.783s] running install_lib
+[0.795s] copying /home/xenox/Desktop/slam/build/esp32_cam_slam/build/lib/esp32_cam_slam/fetcher.py -> /home/xenox/Desktop/slam/install/esp32_cam_slam/lib/python3.12/site-packages/esp32_cam_slam
+[0.795s] byte-compiling /home/xenox/Desktop/slam/install/esp32_cam_slam/lib/python3.12/site-packages/esp32_cam_slam/fetcher.py to fetcher.cpython-312.pyc
+[0.797s] running install_data
+[0.797s] running install_egg_info
+[0.809s] removing '/home/xenox/Desktop/slam/install/esp32_cam_slam/lib/python3.12/site-packages/esp32_cam_slam-0.0.0-py3.12.egg-info' (and everything under it)
+[0.810s] Copying ../../build/esp32_cam_slam/esp32_cam_slam.egg-info to /home/xenox/Desktop/slam/install/esp32_cam_slam/lib/python3.12/site-packages/esp32_cam_slam-0.0.0-py3.12.egg-info
+[0.810s] running install_scripts
+[0.890s] Installing fetcher script to /home/xenox/Desktop/slam/install/esp32_cam_slam/lib/esp32_cam_slam
+[0.891s] writing list of installed files to '/home/xenox/Desktop/slam/build/esp32_cam_slam/install.log'
+[0.912s] Invoked command in '/home/xenox/Desktop/slam/src/esp32_cam_slam' returned '0': PYTHONPATH=/home/xenox/Desktop/slam/build/esp32_cam_slam/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/xenox/Desktop/slam/install/esp32_cam_slam/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/esp32_cam_slam build --build-base /home/xenox/Desktop/slam/build/esp32_cam_slam/build install --record /home/xenox/Desktop/slam/build/esp32_cam_slam/install.log --single-version-externally-managed install_data

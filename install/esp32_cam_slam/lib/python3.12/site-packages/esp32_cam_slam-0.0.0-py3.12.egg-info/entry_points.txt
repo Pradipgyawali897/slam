@@ -1,0 +1,2 @@
+[console_scripts]
+fetcher = esp32_cam_slam.fetcher:main
